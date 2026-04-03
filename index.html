@@ -19,13 +19,20 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <a href="#">
+                    <a href="index.html">
                         <i class="fas fa-microchip"></i>
                         <span class="logo-text">ELMA-<span class="highlight">Tech</span></span>
                     </a>
                     <div class="logo-glow"></div>
                 </div>
-                
+
+                <nav class="main-nav" aria-label="Navigation principale">
+                    <a href="index.html">Accueil</a>
+                    <a href="products.html">Produits</a>
+                    <a href="index.html#offers">Offres</a>
+                    <a href="about.html">À propos</a>
+                    <a href="contact.html">Contact</a>
+                </nav>
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
                     <input type="text" id="searchInput" placeholder="Rechercher un produit..." aria-label="Rechercher">
@@ -49,6 +56,10 @@
     <section class="hero">
         <div class="hero-overlay"></div>
         <div class="container">
+            <div class="hero-profile-wrapper">
+                <img src="images/elmam.jpeg" alt="Photo de profil" class="hero-profile-photo" onerror="this.src='images/profile.jpg'">
+                <div class="hero-profile-text">Bienvenue chez <strong>ELMA-Tech</strong></div>
+            </div>
             <div class="hero-content">
                 <div class="hero-badge">Welcome to ELMA-TECH</div>
                 <h1>L'excellence <span class="highlight">technologique</span><br>à portée de main</h1>
@@ -155,6 +166,32 @@
         </div>
     </section>
 
+    <!-- Sections complémentaires pour les liens rapides -->
+    <section id="about" class="quick-section">
+        <div class="container">
+            <h2>À propos</h2>
+            <p>ELMA-Tech est votre partenaire technologique premium depuis 2024. Nous proposons des produits 100% vérifiés, une garantie locale et un service client réactif. L’objectif est de vous offrir un parcours d’achat 100% fluide et sécurisé.</p>
+        </div>
+    </section>
+
+    <section id="faq" class="quick-section">
+        <div class="container">
+            <h2>FAQ</h2>
+            <ul class="faq-list">
+                <li><strong>Livraison :</strong> Livraison en 48h dans tout le Sénégal, suivi en temps réel.</li>
+                <li><strong>Retours :</strong> Retour sous 15 jours, produit non ouvert, remboursement rapide.</li>
+                <li><strong>Garantie :</strong> 12 mois pièces et main d’œuvre sur tous nos produits premium.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="contact" class="quick-section">
+        <div class="container">
+            <h2>Contact</h2>
+            <p>Une question ? Un besoin pro ? Écrivez-nous via contact@elma-tech.com ou appelez +221 78 310 46 84.</p>
+        </div>
+    </section>
+
     <!-- Footer amélioré -->
     <footer class="footer">
         <div class="footer-waves">
@@ -180,28 +217,17 @@
                 <div class="footer-section">
                     <h3>Liens rapides</h3>
                     <ul>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> À propos</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Livraison</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Retours</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="#offers"><i class="fas fa-chevron-right"></i> Livraison</a></li>
+                        <li><a href="#faq"><i class="fas fa-chevron-right"></i> Retours</a></li>
+                        <li><a href="#faq"><i class="fas fa-chevron-right"></i> FAQ</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-section">
-                    <h3>Catégories</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Smartphones</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Ordinateurs</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Montres</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Accessoires</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Promotions</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Newsletter</h3>
-                    <p>Recevez nos offres exclusives et nouveautés</p>
+                <div class="footer-section newsletter-emphasis">
+                    <h3>Newsletter Premium</h3>
+                    <p>Recevez en exclusivité nos offres pro, annonces produits 2026 et ventes flash à prix négocié.</p>
                     <form class="newsletter-form" id="newsletterForm">
                         <input type="email" placeholder="Votre adresse email" required>
                         <button type="submit">
@@ -220,12 +246,6 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2025 ELMA-Tech - Tous droits réservés | Design par ELMA-Tech Studio</p>
-                <div class="legal-links">
-                    <a href="#">Mentions légales</a>
-                    <a href="#">Politique de confidentialité</a>
-                    <a href="#">CGV</a>
-                    <a href="#">Cookies</a>
-                </div>
             </div>
         </div>
     </footer>

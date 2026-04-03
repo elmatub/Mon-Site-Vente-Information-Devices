@@ -71,10 +71,16 @@ class Cart {
     // Mettre à jour l'affichage du compteur
     updateCartCount() {
         const cartCountElement = document.getElementById('cartCount');
+        const cartCountHeader = document.getElementById('cartCountHeader');
+        const totalItems = this.getTotalItems();
+
         if (cartCountElement) {
-            const totalItems = this.getTotalItems();
             cartCountElement.textContent = totalItems;
             cartCountElement.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+
+        if (cartCountHeader) {
+            cartCountHeader.textContent = totalItems;
         }
     }
 

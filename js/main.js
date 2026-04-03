@@ -3,8 +3,40 @@ class TechHub {
     constructor() {
         this.currentCategory = 'all';
         this.currentSearch = '';
-        this.products = getProducts();
+        this.products = this.prepareProductsFor2026(getProducts());
         this.init();
+    }
+
+    prepareProductsFor2026(products) {
+        // Ajustement marché 2026 : inflation / prix du jour et sélection promos autorisées.
+        const inflationMultiplier = 1.09; // +9% en moyenne 2026
+        const promoIds = [1, 3, 5, 9, 16, 20, 24, 28];
+        const nonPromoIds = [2, 7, 18];
+
+        return products.map(product => {
+            const adjusted = { ...product };
+            adjusted.price = Math.round(product.price * inflationMultiplier);
+            if (product.originalPrice) {
+                adjusted.originalPrice = Math.round(product.originalPrice * inflationMultiplier);
+            }
+
+            if (promoIds.includes(product.id)) {
+                adjusted.badge = 'promo';
+            } else if (nonPromoIds.includes(product.id)) {
+                adjusted.badge = null;
+            }
+            // Nouveaux produits conservant le badge new
+            if (product.badge === 'new' && !promoIds.includes(product.id)) {
+                adjusted.badge = 'new';
+            }
+
+            // Vérification standard pour des promotions crédibles
+            if (adjusted.originalPrice && adjusted.price >= adjusted.originalPrice) {
+                adjusted.originalPrice = null; // pas de fausse réduction
+            }
+
+            return adjusted;
+        });
     }
 
     init() {
@@ -57,8 +89,9 @@ class TechHub {
                     <h3 class="product-title">${product.name}</h3>
                     <div class="product-price">
                         ${product.originalPrice ? `<span style="text-decoration: line-through; color: #999; font-size: 0.9rem;">${product.originalPrice} FCFA</span> ` : ''}
-                        ${product.price} FCFA
+                        ${product.price.toLocaleString('fr-FR')} FCFA
                     </div>
+                    <div class="product-stock">${product.stock ? `Stock : ${product.stock}` : 'Stock : indéterminé'}</div>
                     <div class="product-specs">
                         ${this.getProductSpecsSummary(product.specs)}
                     </div>
@@ -174,36 +207,47 @@ class TechHub {
     openProductModal(productId) {
         const product = getProductById(productId);
         if (!product) return;
-        
+
         const modal = document.getElementById('productModal');
         const modalContent = document.getElementById('modalProductDetails');
-        
+
         if (modalContent) {
+            const availabilityText = product.stock && product.stock > 0 ? `${product.stock} en stock` : 'Rupture de stock';
+            const percentageDiscount = product.originalPrice ? Math.round((1 - (product.price / product.originalPrice)) * 100) : 0;
+
             modalContent.innerHTML = `
                 <div class="modal-product">
                     <img src="${product.image}" alt="${product.name}" class="modal-product-image">
                     <h2>${product.name}</h2>
                     <div class="modal-price">
-                        ${product.originalPrice ? `<span style="text-decoration: line-through; color: #999;">${product.originalPrice} FCFA</span> ` : ''}
-                        <strong style="font-size: 1.8rem; color: var(--primary-color);">${product.price} FCFA</strong>
+                        ${product.originalPrice ? `<span class="strikethrough">${product.originalPrice} FCFA</span> ` : ''}
+                        <strong class="current-price">${product.price.toLocaleString('fr-FR')} FCFA</strong>
+                        ${product.originalPrice ? `<span class="discount-badge">-${percentageDiscount}%</span>` : ''}
                     </div>
-                    <p class="modal-description" style="margin: 1rem 0; line-height: 1.6;">${product.description}</p>
-                    <h3 style="margin: 1rem 0 0.5rem;">Caractéristiques techniques</h3>
-                    <div class="specs-list">
-                        ${Object.entries(product.specs).map(([key, value]) => `
-                            <div class="spec-item">
-                                <strong>${this.formatSpecKey(key)}</strong>
-                                <span>${value}</span>
-                            </div>
-                        `).join('')}
+                    <p class="modal-description">${product.description}</p>
+                    <div class="modal-meta">
+                        <span class="availability">${availabilityText}</span>
+                        <span class="sku">Référence : ${product.id}</span>
                     </div>
-                    <button class="add-to-cart-btn modal-add-btn" data-id="${product.id}" style="margin-top: 1.5rem;">
+
+                    <h3>Caractéristiques techniques</h3>
+                    <table class="modal-spec-table">
+                        <tbody>
+                            ${Object.entries(product.specs).map(([key, value]) => `
+                                <tr>
+                                    <td>${this.formatSpecKey(key)}</td>
+                                    <td>${value}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+
+                    <button class="add-to-cart-btn modal-add-btn" data-id="${product.id}">
                         <i class="fas fa-shopping-cart"></i> Ajouter au panier
                     </button>
                 </div>
             `;
-            
-            // Ajouter l'écouteur pour le bouton d'ajout au panier dans la modale
+
             const addBtn = modalContent.querySelector('.modal-add-btn');
             if (addBtn) {
                 addBtn.addEventListener('click', () => {
@@ -212,7 +256,7 @@ class TechHub {
                 });
             }
         }
-        
+
         modal.style.display = 'block';
     }
     
