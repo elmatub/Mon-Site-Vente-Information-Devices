@@ -157,7 +157,7 @@ class Cart {
             </div>
         `).join('');
         
-        cartTotalElement.textContent = this.getTotal().toFixed(2);
+        cartTotalElement.textContent = this.getTotal().toLocaleString() + ' FCFA';
         
         // Ajouter les écouteurs d'événements
         document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
