@@ -144,7 +144,7 @@ class Cart {
                 <img src="${item.image}" alt="${item.name}" class="cart-item-image">
                 <div class="cart-item-info">
                     <h4>${item.name}</h4>
-                    <p>${item.price} €</p>
+                    <p>${item.price} FCFA</p>
                 </div>
                 <div class="cart-item-actions">
                     <button class="quantity-btn minus" data-id="${item.id}">-</button>
